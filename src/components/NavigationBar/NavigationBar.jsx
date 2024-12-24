@@ -2,6 +2,7 @@ import Logo from "../../assets/Logo/Logo.png";
 import { PiGlobeLight } from "react-icons/pi";
 import { HiMenu, HiX } from "react-icons/hi";
 import { useState } from "react";
+import { Link } from "react-router";
 const NavigationBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -10,20 +11,23 @@ const NavigationBar = () => {
   };
   return (
     <>
-      <div className="px-8 py-4 sticky flex items-center justify-between bg-transparent">
+      <div className="px-8 py-4 w-full flex items-center justify-between">
         {/* First Part */}
-        <div>
+        <Link to="/">
           <img src={Logo} alt="logo" className="w-[8rem]" />
-        </div>
+        </Link>
         {/* Second Part Desktop Navigation*/}
         <div className="hidden md:flex items-center gap-8">
           <button className="flex items-center gap-2 text-white font-semibold">
             <PiGlobeLight />
             English
           </button>
-          <button className="bg-white text-black font-semibold px-4 py-2 w-full min-w-[100px] rounded-full">
+          <Link
+            to="/login"
+            className="bg-white text-black text-center font-semibold px-4 py-2 w-full min-w-[90px] rounded-full"
+          >
             Log in
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Navigation */}

@@ -1,26 +1,31 @@
 import Main from "../../assets/Main.png";
-import Vector from "../../assets/Logo/Vector.png";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
-    <section
-      className="relative h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${Main})` }}
+    <div
+      className="min-h-screen bg-cover bg-center"
+      style={{
+        backgroundImage: `url(${Main})`,
+      }}
     >
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center px-4 md:px-8">
-          <div className="flex flex-row items-center gap-4 mb-4">
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white">
-              Swipe Right
-            </h2>
-            <img src={Vector} alt="vector" className="w-10 md:w-14 lg:w-24" />
+      <div className="pt-56">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="mb-5 text-5xl text-white font-bold">Swap Right</h1>
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="bg-gradient-to-r from-[#FD2B74] to-[#FE5C3A] text-white font-semibold px-6 py-3 rounded-full text-sm md:text-base lg:text-lg"
+            >
+              Create account
+            </button>
           </div>
-          <button className="bg-gradient-to-r from-[#FD2B74] to-[#FE5C3A] text-white font-semibold px-6 py-3 rounded-full text-sm md:text-base lg:text-lg">
-            Create account
-          </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
