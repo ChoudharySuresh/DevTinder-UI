@@ -4,8 +4,14 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import App from "./App.jsx";
 import Home from "./pages/Home/Home.jsx";
-import Login from "./pages/Login/Login.jsx";
+import LoginContainer from "./pages/Login/LoginContainer.jsx";
+import ProfileContainer from "./pages/Profile/ProfileContainer.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import FeedContainer from "./pages/Feed/FeedContainer.jsx";
+import { Provider } from "react-redux";
+import { appStore } from "./store/appStore.js";
 
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,13 +28,25 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <LoginContainer />,
+      },
+      {
+        path: "/feed",
+        element: <FeedContainer />,
+      },
+      {
+        path: "/profile",
+        element: <ProfileContainer />,
       },
     ],
   },
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={appStore}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </Provider>
   </StrictMode>
 );

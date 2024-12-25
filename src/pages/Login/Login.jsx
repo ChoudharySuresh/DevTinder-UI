@@ -1,23 +1,16 @@
-import { useState } from "react";
 import LoginImg from "../../assets/LoginImg.svg";
 import Input from "../../components/Input/Input";
-import useLoginForm from "../../Hooks/Auth/useLoginForm";
 
-const Login = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
-  const { control, handleSubmit, errors } = useLoginForm(isSignUp);
-  const onSubmit = (data) => {
-    if (isSignUp) {
-      console.log("Sign Up Data:", data);
-    } else {
-      console.log("Login Data:", data);
-    }
-  };
-
-  const toggleForm = () => {
-    setIsSignUp(!isSignUp);
-  };
-
+const Login = ({
+  isSignUp,
+  toggleForm,
+  control,
+  handleSubmit,
+  onSubmit,
+  errors,
+  signUpError,
+  loginError,
+}) => {
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -54,10 +47,10 @@ const Login = () => {
                   label="Email"
                   inputType="email"
                   inputPlaceholder="email"
-                  {...control.register("email")}
+                  {...control.register("emailId")}
                 />
-                {errors.email && (
-                  <p className="text-red-400">{errors.email.message}</p>
+                {errors.emailId && (
+                  <p className="text-red-400">{errors.emailId.message}</p>
                 )}
                 <Input
                   label="Password"
@@ -81,6 +74,13 @@ const Login = () => {
                   {isSignUp ? "Login" : "Sign up"}
                 </p>
               </div>
+              {isSignUp
+                ? signUpError && <p className="text-red-600 text-center">{signUpError?.response?.data?.message}</p>
+                : loginError && (
+                    <p className="text-red-600 text-center">
+                      {loginError?.response?.data?.message}
+                    </p>
+                  )}
             </form>
           </div>
         </div>

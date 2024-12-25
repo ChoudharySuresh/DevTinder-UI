@@ -9,12 +9,13 @@ const useLoginForm = (isSignUp) => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onTouched",
   });
 
-  return { control, handleSubmit, errors };
+  return { control, handleSubmit, errors, reset };
 };
 
 export default useLoginForm;

@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object({
-  email: yup
+  emailId: yup
     .string()
     .email("Invalid email format")
     .required("Email is required"),
@@ -14,7 +14,7 @@ export const loginSchema = yup.object({
 export const signUpSchema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
-  email: yup
+  emailId: yup
     .string()
     .email("Invalid email format")
     .required("Email is required"),
