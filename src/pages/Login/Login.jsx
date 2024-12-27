@@ -75,7 +75,11 @@ const Login = ({
                 </p>
               </div>
               {isSignUp
-                ? signUpError && <p className="text-red-600 text-center">{signUpError?.response?.data?.message}</p>
+                ? signUpError && (
+                    <p className="text-red-600 text-center">
+                      {signUpError?.response?.data?.message}
+                    </p>
+                  )
                 : loginError && (
                     <p className="text-red-600 text-center">
                       {loginError?.response?.data?.message}
