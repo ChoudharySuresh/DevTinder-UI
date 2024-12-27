@@ -14,7 +14,7 @@ export const profileSchema = yup.object({
     .string()
     .oneOf(["Male", "Female", "Other"], "Gender must be Male, Female, or Other")
     .required("Gender is required"),
-  photoURL: yup
+  photoUrl: yup
     .string()
     .url("Photo URL must be Valid URL")
     .required("Photo URL is required"),

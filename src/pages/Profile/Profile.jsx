@@ -1,18 +1,39 @@
 import Input from "../../components/Input/Input";
 
-const Profile = ({ control, handleSubmit, onSubmit, errors }) => {
+const Profile = ({ userInfo, control, handleSubmit, onSubmit, errors }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="card w-full max-w-[70rem] mx-4 md:mx-0 lg:card-side bg-base-300 shadow-xl">
         <div className="p-4">
           {/* img div */}
-          <div className="bg-red-200  h-[200px] rounded-xl"></div>
+          <div className="rounded-xl">
+            <img
+              src={userInfo?.photoUrl}
+              alt="profilePhoto"
+              className="h-[15rem] rounded-xl"
+            />
+          </div>
           <div className="flex flex-col gap-2 mt-5">
-            <p>Suresh Choudhary</p>
-            <p>20</p>
-            <p>Male</p>
-            <p>This is just dummy About Section.</p>
-            <p>Skills Goes Here</p>
+            <p>
+              {userInfo?.firstName} {userInfo?.lastName}
+            </p>
+            <p>{userInfo?.age || "-"}</p>
+            <p>{userInfo?.gender || "-"}</p>
+            <p>{userInfo?.about || "-"}</p>
+            <div className="mt-2">
+              {userInfo?.skills?.map((item) => {
+                return (
+                  <>
+                    <span
+                      key={item}
+                      className="bg-gray-100 text-gray-800 text-base font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300"
+                    >
+                      {item}
+                    </span>
+                  </>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="card-body">
@@ -72,10 +93,10 @@ const Profile = ({ control, handleSubmit, onSubmit, errors }) => {
                   label="Photo URL"
                   inputType="text"
                   inputPlaceholder="Photo URL"
-                  {...control.register("photoURL")}
+                  {...control.register("photoUrl")}
                 />
-                {errors.photoURL && (
-                  <p className="text-red-400 mt-2">{errors.photoURL.message}</p>
+                {errors.photoUrl && (
+                  <p className="text-red-400 mt-2">{errors.photoUrl.message}</p>
                 )}
               </div>
               <div>
