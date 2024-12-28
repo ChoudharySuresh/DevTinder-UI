@@ -1,14 +1,35 @@
 import Logo from "../../assets/Logo/Logo.png";
 import { PiGlobeLight } from "react-icons/pi";
 import { HiMenu, HiX } from "react-icons/hi";
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from "../Avatar/Avatar";
+import { useLogoutUser } from "../../services/mutation";
+import { removeUser } from "../../store/User/userSlice";
 const NavigationBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutUserMutation = useLogoutUser();
+
+  const handleLogout = () => {
+    logoutUserMutation.mutate();
+  };
+
+  useEffect(() => {
+    if (logoutUserMutation.isSuccess) {
+      dispatch(removeUser());
+      navigate("/login");
+    }
+  }, [logoutUserMutation.isSuccess]);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
   return (
     <>
       <div className="px-8 py-4 w-full flex items-center justify-between">
@@ -22,12 +43,37 @@ const NavigationBar = () => {
             <PiGlobeLight />
             English
           </button>
-          <Link
-            to="/login"
-            className="bg-white text-black text-center font-semibold px-4 py-2 w-full min-w-[90px] rounded-full"
-          >
-            Log in
-          </Link>
+          {userInfo ? (
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="m-1">
+                <Avatar img={userInfo?.photoUrl} />
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              >
+                <li>
+                  <Link to="/profile">Profile</Link>
+                </li>
+                <li>
+                  <Link to="/connection">Connection</Link>
+                </li>
+                <li>
+                  <Link to="/request">Request</Link>
+                </li>
+                <li>
+                  <a onClick={handleLogout}>Logout</a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-white text-black text-center font-semibold px-4 py-2 w-full min-w-[90px] rounded-full"
+            >
+              Log in
+            </Link>
+          )}
         </div>
 
         {/* Mobile Navigation */}

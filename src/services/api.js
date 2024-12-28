@@ -17,6 +17,11 @@ export const loginUser = async (data) => {
     .data;
 };
 
+export const logoutUser = async () => {
+  return (await axiosInstance.post("/logout", {}, { withCredentials: true }))
+    .data;
+};
+
 export const fetchProfile = async () => {
   return (await axiosInstance.get("/profile/view", { withCredentials: true }))
     .data;
