@@ -1,6 +1,17 @@
 import Input from "../../components/Input/Input";
 
-const Profile = ({ userInfo, control, handleSubmit, onSubmit, errors }) => {
+const Profile = ({
+  userInfo,
+  control,
+  handleSubmit,
+  onSubmit,
+  errors,
+  handleAddSkill,
+  handleRemoveSkill,
+  skillInput,
+  setSkillInput,
+  skills,
+}) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="card w-full max-w-[70rem] mx-4 md:mx-0 lg:card-side bg-base-300 shadow-xl">
@@ -110,17 +121,59 @@ const Profile = ({ userInfo, control, handleSubmit, onSubmit, errors }) => {
                   <p className="text-red-400 mt-2">{errors.about.message}</p>
                 )}
               </div>
-              <div>
-                <Input
-                  label="Skills"
-                  inputType="text"
-                  inputPlaceholder="Skills"
-                  {...control.register("skills")}
-                />
-                {errors.skills && (
-                  <p className="text-red-400 mt-2">{errors.skills.message}</p>
-                )}
+              {/* Skills Input */}
+              <div className="mt-4">
+                <label htmlFor="skills" className="block text-sm font-medium">
+                  Skills
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={skillInput}
+                    onChange={(e) => setSkillInput(e.target.value)}
+                    placeholder="Add a skill"
+                    className="input input-bordered w-full mt-2 "
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddSkill}
+                    className="btn btn-md btn-primary"
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
+            </div>
+            <div className="w-[50%]">
+              {skills?.map((skill, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center bg-gray-600 justify-between text-white px-3 py-1 rounded-md mt-2"
+                  >
+                    <span>{skill}</span>
+                    <button
+                      className="btn btn-circle btn-sm"
+                      onClick={() => handleRemoveSkill(index)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                );
+              })}
             </div>
             <div className="card-actions justify-end">
               <button className="btn btn-primary" type="submit">

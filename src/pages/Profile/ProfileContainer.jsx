@@ -5,16 +5,19 @@ import { profileSchema } from "../../utils/profileschema";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
+import { useUpdateProfile } from "../../services/mutation";
 
 const ProfileContainer = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const [formData, setFormData] = useState();
+  const [skillInput, setSkillInput] = useState("");
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(profileSchema),
     mode: "onTouched",
@@ -25,12 +28,13 @@ const ProfileContainer = () => {
       gender: "",
       photoUrl: "",
       about: "",
-      skills: "",
+      skills: [],
     },
   });
+  const updateProfileMutation = useUpdateProfile();
 
   const skills = watch("skills");
-  console.log("Profile Info Skills", skills);
+
   useEffect(() => {
     if (userInfo) {
       reset({
@@ -40,12 +44,12 @@ const ProfileContainer = () => {
         gender: userInfo?.gender || "",
         photoUrl: userInfo?.photoUrl || "",
         about: userInfo?.about || "",
-        skills: userInfo.skills ? userInfo.skills.join(", ") : "",
+        skills: userInfo.skills || [],
       });
     }
   }, [userInfo, reset]);
-  console.log("UserInfo In The Profile Container", userInfo);
 
+  // Handling Form Submission
   const onSubmit = (data) => {
     setFormData(data);
     document.getElementById("my_modal_3").showModal();
@@ -53,11 +57,38 @@ const ProfileContainer = () => {
 
   const handleConfirm = () => {
     console.log("Profile Data", formData);
-    document.getElementById("my_modal_3").close();
+    if (formData) {
+      updateProfileMutation.mutate(formData);
+    }
+    if (updateProfileMutation.isSuccess) {
+      document.getElementById("my_modal_3").close();
+    }
   };
   const handleCancel = () => {
     document.getElementById("my_modal_3").close();
   };
+
+  // Skills Input To Push into array
+  const handleAddSkill = () => {
+    if (skillInput.trim()) {
+      setValue("skills", [...skills, skillInput.trim()]);
+      setSkillInput("");
+    }
+  };
+
+  const handleRemoveSkill = (index) => {
+    const updatedSkills = skills?.filter((_, i) => i !== index);
+    setValue("skills", updatedSkills);
+  };
+
+  console.log(
+    "Update Profile Status ",
+    updateProfileMutation.isSuccess,
+    updateProfileMutation.data,
+    "Update Profile Error",
+    updateProfileMutation.isError,
+    updateProfileMutation.error
+  );
 
   return (
     <div>
@@ -67,6 +98,11 @@ const ProfileContainer = () => {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         errors={errors}
+        handleAddSkill={handleAddSkill}
+        handleRemoveSkill={handleRemoveSkill}
+        skillInput={skillInput}
+        setSkillInput={setSkillInput}
+        skills={skills}
       />
       <ConfirmationModal
         heading="Confirmation ?"

@@ -23,12 +23,7 @@ export const profileSchema = yup.object({
     .max(200, "About cannot be exceed 200 characters")
     .required("About is required"),
   skills: yup
-    .string()
-    .required("SKills is required")
-    .test(
-      "skills-list",
-      "skills must be comma-separated list",
-      (value) =>
-        !value || value.split(",").every((skill) => skill.trim() !== "")
-    ),
+    .array()
+    .of(yup.string().required("String cannot be empty"))
+    .required("Skills is required"),
 });

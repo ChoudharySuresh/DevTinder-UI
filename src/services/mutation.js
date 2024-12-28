@@ -1,5 +1,5 @@
-import { useMutation } from "react-query";
-import { loginUser, signupUser } from "./api";
+import { useMutation, useQueryClient } from "react-query";
+import { loginUser, signupUser, updateProfile } from "./api";
 
 export function useSignUpUser() {
   return useMutation({
@@ -29,6 +29,27 @@ export function useLoginUser() {
     },
     onError: () => {
       console.log("ERROR LOGIN");
+    },
+  });
+}
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => updateProfile(data),
+    onMutate: () => {
+      console.log("Updating Profile");
+    },
+    onSuccess: (response) => {
+      console.log("Update the Profile Successfully", response);
+      if (response) {
+        queryClient.invalidateQueries(["user"]);
+      }
+      return response;
+    },
+    onError: (error) => {
+      console.log("Error Update Profile");
+      return error;
     },
   });
 }

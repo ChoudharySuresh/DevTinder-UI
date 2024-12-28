@@ -21,3 +21,11 @@ export const fetchProfile = async () => {
   return (await axiosInstance.get("/profile/view", { withCredentials: true }))
     .data;
 };
+
+export const updateProfile = async (data) => {
+  return (
+    await axiosInstance.patch("/profile/edit", data, {
+      withCredentials: true,
+    })
+  ).data;
+};
