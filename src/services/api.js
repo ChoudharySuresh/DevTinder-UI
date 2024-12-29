@@ -34,3 +34,8 @@ export const updateProfile = async (data) => {
     })
   ).data;
 };
+
+// Feed
+export const getFeed = async () => {
+  return (await axiosInstance.get("/feed", { withCredentials: true })).data;
+};

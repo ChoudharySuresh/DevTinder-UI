@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { fetchProfile } from "./api";
+import { fetchProfile, getFeed } from "./api";
 
 export function useFetchProfile() {
   return useQuery({
@@ -11,6 +11,21 @@ export function useFetchProfile() {
     },
     onError: (err) => {
       console.log("Error while fetching User Profile", err);
+      return err;
+    },
+  });
+}
+
+export function useGetFeed() {
+  return useQuery({
+    queryKey: ["feed"],
+    queryFn: getFeed,
+    onSuccess: (data) => {
+      console.log("Feed Data", data);
+      return data;
+    },
+    onError: (err) => {
+      console.log("Error while fetching Feed", err);
       return err;
     },
   });
