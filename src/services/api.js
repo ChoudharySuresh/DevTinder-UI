@@ -39,3 +39,12 @@ export const updateProfile = async (data) => {
 export const getFeed = async () => {
   return (await axiosInstance.get("/feed", { withCredentials: true })).data;
 };
+
+// Connection Requests
+export const getConnections = async () => {
+  return (
+    await axiosInstance.get("/user/requests/received", {
+      withCredentials: true,
+    })
+  ).data.data;
+};

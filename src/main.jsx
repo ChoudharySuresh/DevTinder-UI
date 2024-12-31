@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import FeedContainer from "./pages/Feed/FeedContainer.jsx";
 import { Provider } from "react-redux";
 import { appStore } from "./store/appStore.js";
+import ConnectionContainer from "./pages/Connection/ConnectionContainer.jsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <ProfileContainer />,
+      },
+      {
+        path: "/connection",
+        element: <ConnectionContainer />,
       },
     ],
   },
