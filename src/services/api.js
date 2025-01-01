@@ -48,3 +48,12 @@ export const getConnections = async () => {
     })
   ).data.data;
 };
+
+// Get Requests
+export const getRequests = async () => {
+  return (
+    await axiosInstance.get("/user/requests/received", {
+      withCredentials: true,
+    })
+  ).data.data;
+};

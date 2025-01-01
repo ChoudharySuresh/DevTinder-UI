@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { fetchProfile, getConnections, getFeed } from "./api";
+import { fetchProfile, getConnections, getFeed, getRequests } from "./api";
 
 export function useFetchProfile() {
   return useQuery({
@@ -35,6 +35,18 @@ export function useGetConnections() {
   return useQuery({
     queryKey: ["connection"],
     queryFn: getConnections,
+    onSuccess: () => {
+      console.log("Connection success");
+    },
+    onError: (err) => {
+      console.log("Error while Connection Query", err);
+    },
+  });
+}
+export function useGetRequests() {
+  return useQuery({
+    queryKey: ["request"],
+    queryFn: getRequests,
     onSuccess: () => {
       console.log("Connection success");
     },

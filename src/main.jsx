@@ -11,6 +11,7 @@ import FeedContainer from "./pages/Feed/FeedContainer.jsx";
 import { Provider } from "react-redux";
 import { appStore } from "./store/appStore.js";
 import ConnectionContainer from "./pages/Connection/ConnectionContainer.jsx";
+import RequestContainer from "./pages/Request/RequestContainer.jsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/connection",
         element: <ConnectionContainer />,
+      },
+      {
+        path: "/request",
+        element: <RequestContainer />,
       },
     ],
   },
