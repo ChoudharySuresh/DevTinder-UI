@@ -1,5 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
-import { loginUser, logoutUser, signupUser, updateProfile } from "./api";
+import {
+  loginUser,
+  logoutUser,
+  postRequestStatus,
+  signupUser,
+  updateProfile,
+} from "./api";
 
 export function useSignUpUser() {
   return useMutation({
@@ -66,6 +72,23 @@ export function useLogoutUser() {
     },
     onError: (error) => {
       console.log("Error Update Profile");
+      return error;
+    },
+  });
+}
+
+export function useRequestStatus() {
+  return useMutation({
+    mutationFn: ({ status, requestId }) => postRequestStatus(status, requestId),
+    onMutate: () => {
+      console.log("Request send");
+    },
+    onSuccess: (response) => {
+      console.log("Request Successfully", response);
+      return response;
+    },
+    onError: (error) => {
+      console.log("Error Request ");
       return error;
     },
   });

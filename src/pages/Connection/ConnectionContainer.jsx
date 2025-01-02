@@ -13,6 +13,14 @@ const ConnectionContainer = () => {
     );
   }
 
+  if (connectionQuery?.data?.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>No More Connectios Are Found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <Connection connections={connectionQuery.data} />

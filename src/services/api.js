@@ -43,7 +43,7 @@ export const getFeed = async () => {
 // Connection Requests
 export const getConnections = async () => {
   return (
-    await axiosInstance.get("/user/requests/received", {
+    await axiosInstance.get("/user/connections", {
       withCredentials: true,
     })
   ).data.data;
@@ -56,4 +56,15 @@ export const getRequests = async () => {
       withCredentials: true,
     })
   ).data.data;
+};
+
+// Send the Status of request
+export const postRequestStatus = async (status, requestId) => {
+  return (
+    await axiosInstance.post(
+      `/request/review/${status}/${requestId}`,
+      {},
+      { withCredentials: true }
+    )
+  )?.data;
 };
